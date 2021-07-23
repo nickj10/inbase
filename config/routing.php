@@ -9,3 +9,4 @@ $app->get('/invoices', InvoiceController::class . ':getAllInvoices')->setName('i
 $app->get('/invoices/add', InvoiceController::class . ':showCreateInvoicePage')->setName('invoiceCreateForm');
 $app->post('/invoices/add', InvoiceController::class . ':createNewInvoice')->setName('invoiceCreate');
 $app->delete('/invoices/{invoiceId}', InvoiceController::class . ':deleteInvoice')->setName('invoiceDelete');
+$app->put('/invoices/{invoiceId}', InvoiceController::class . ':updateInvoice')->setName('invoiceUpdate');
