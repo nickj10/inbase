@@ -28,6 +28,10 @@
 							<td>{{ invoice.clientName }}</td>
 							<td>{{ invoice.clientAddress }}</td>
 							<td>{{ invoice.totalAmount }}</td>
+							<td>
+								<a href="/invoices/{{invoice.invoiceId}}" class="btn btn-info btn-m" role="button">More info</a>
+								<button onclick="deleteInvoice({{ invoice.invoiceId }})" class="btn btn-danger btn-m">Delete</button>
+							</td>
 						</tr>
 					</tbody>
 				</tbody>
@@ -35,3 +39,17 @@
 		{% endfor %}
 	</tbody>
 </table></div></div>{% endblock %}
+{% block scripts %}
+<script>
+function deleteInvoice(id) {
+	$.ajax({
+  	url: "/invoices/" + id,
+  	type: 'DELETE',
+  	success: function()
+    {
+      window.location.href = "/invoices";
+    }
+  });
+}
+</script>
+{% endblock %}
