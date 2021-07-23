@@ -84,10 +84,9 @@ final class InvoiceController
     {
         $id = $request->getAttribute('invoiceId');
         $invoice = $this->db->getInvoiceById($id);
-
         if($invoice == null) {
-            $responseMessage = 'There is no invoice with id ' . $id;
-            return $response->withHeader('Location', '/invoices')->withStatus(301)->withJson($responseMessage);
+            $responseMessage = 'There is no invoice with id ' . $id; // TODO: Add this to flash messages
+            return $response->withHeader('Location', '/invoices')->withStatus(301);
         }
         // return $this->twig->render(
         //     $response,
@@ -96,6 +95,7 @@ final class InvoiceController
         //         'invoices' => $invoices
         //     ]
         // );
+
         return $response->withJson($invoice, 200);
     }
 

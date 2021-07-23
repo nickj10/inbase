@@ -74,11 +74,10 @@ final class MySQLInvoiceRepository implements InvoiceRepository
         $statement->execute();
         $count = $statement->rowCount();
         if ($count > 0) {
-            $row = $statement->fetch();
-            return Invoice::fromDatabase(intval($row['invoiceId']), $row['invoiceNumber'], $row['clientName'], $row['clientAddress'], floatval($row['totalAmount']), DateTime::createFromFormat(self::DATE_FORMAT, $row['createdAt']));
-        } else {
-            return null;
+            $row = $statement->fetch(PDO::FETCH_OBJ);
+            return $row;
         }
+        return null;
     }
 
     public function deleteInvoice(int $invoiceId): bool {
