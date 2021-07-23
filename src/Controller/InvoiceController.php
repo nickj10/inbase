@@ -88,4 +88,26 @@ final class InvoiceController
         }
         return $reponse->withStatus(500);
     }
+
+    public function updateInvoice(Request $request, Response $response): Response
+    {
+        $id = $request->getAttribute('invoiceId');
+        $data = $request->getParsedBody();
+
+        $errors = [];
+
+        if ($id != null) {
+            $invoice = new Invoice(
+                $data['clientName'] ?? '',
+                $data['clientAddress'] ?? '',
+                floatval($data['totalAmount']),
+                new DateTime() // Just to put a value
+            );
+            $invoiceNum = $data['invoiceNumber'] ?? '';
+            $invoice->setInvoiceNumber($invoiceNum);
+            $deleted = $this->db->updateInvoice(intval($id), $invoice);
+            return $response->withHeader('Location', '/invoices')->withStatus(301);
+        }
+        return $reponse->withStatus(500);
+    }
 }

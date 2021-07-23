@@ -74,6 +74,29 @@ final class MySQLInvoiceRepository implements InvoiceRepository
 
         $statement->bindParam('id', $invoiceId, PDO::PARAM_STR);
         $statement->execute(); 
-        return True;
+        return true;
+    }
+
+    public function updateInvoice(int $invoiceId, Invoice $invoice): bool {
+        $query = <<<'QUERY'
+        UPDATE invoices SET invoiceNumber=:invoiceNumber, clientName=:clientName, clientAddress=:clientAddress, totalAmount=:totalAmount
+        WHERE invoiceId=:id
+        QUERY;
+
+        $statement = $this->database->connection()->prepare($query);
+
+        $invoiceNumber = $invoice->getInvoiceNumber();
+        $clientName = $invoice->getClientName();
+        $clientAddress = $invoice->getClientAddress();
+        $totalAmount = $invoice->getTotalAmount();
+
+        $statement->bindParam('invoiceNumber', $invoiceNumber, PDO::PARAM_STR);
+        $statement->bindParam('clientName', $clientName, PDO::PARAM_STR);
+        $statement->bindParam('clientAddress', $clientAddress, PDO::PARAM_STR);
+        $statement->bindParam('totalAmount', $totalAmount, PDO::PARAM_STR);
+        $statement->bindParam('id', $invoiceId, PDO::PARAM_STR);
+
+        $statement->execute();
+        return true;
     }
 }
