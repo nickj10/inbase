@@ -50,13 +50,14 @@ final class InvoiceController
             if (count($errors) > 0) {
                 return $this->twig->render(
                     $response,
-                    'simple-form.twig',
+                    'create-invoice.twig',
                     [
                         'formErrors' => $errors
                     ]
                 );
             } else {
                 $this->db->createInvoice($invoice);
+                return $response->withHeader('Location', '/invoices')->withStatus(201);
             }
         } catch (Exception $exception) {
             // You could render a .twig template here to show the error
@@ -64,7 +65,6 @@ final class InvoiceController
                 ->write('Unexpected error: ' . $exception->getMessage());
             return $response->withStatus(500);
         }
-        return $response->withHeader('Location', '/')->withStatus(201);
     }
 
     public function getAllInvoices(Request $request, Response $response): Response
