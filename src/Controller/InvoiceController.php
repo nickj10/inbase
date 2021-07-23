@@ -64,4 +64,16 @@ final class InvoiceController
         }
         return $response->withHeader('Location', '/')->withStatus(201);
     }
+
+    public function getAllInvoices(Request $request, Response $response): Response
+    {
+        $invoices = $this->db->getAllInvoices();
+        return $this->twig->render(
+            $response,
+            'invoice-list.twig',
+            [
+                'invoices' => $invoices
+            ]
+        );
+    }
 }

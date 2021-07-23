@@ -20,11 +20,29 @@ final class Invoice
         float $totalAmount,
         DateTime $createdAt
     ) {
-        $this->invoiceNumber = uniqid('', true);
         $this->clientName = $clientName;
         $this->clientAddress = $clientAddress;
         $this->totalAmount = $totalAmount;
         $this->createdAt = $createdAt;
+    }
+
+    public static function fromDatabase(
+        int $invoiceId,
+        string $invoiceNumber,
+        string $clientName,
+        string $clientAddress,
+        float $totalAmount,
+        DateTime $createdAt
+    ) {
+        $instance = new self($clientName, $clientAddress, $totalAmount, $createdAt);
+        $instance->invoiceNumber = $invoiceNumber;
+        $instance->invoiceId = $invoiceId;
+        return $instance;
+    }
+
+    public function generateInvoiceNumber()
+    {
+        $this->invoiceNumber = uniqid('', true);
     }
 
     public function getInvoiceId(): int
@@ -57,7 +75,8 @@ final class Invoice
         return $this->createdAt;
     }
 
-    public function setInvoiceNumber(string $invoiceNumber) {
+    public function setInvoiceNumber(string $invoiceNumber)
+    {
         $this->invoiceNumber = $invoiceNumber;
     }
 }

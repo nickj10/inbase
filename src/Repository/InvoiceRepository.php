@@ -9,4 +9,5 @@ use Cole\Projs\Model\Invoice;
 interface InvoiceRepository
 {
     public function createInvoice(Invoice $invoice): void;
+    public function getAllInvoices(); 
 }

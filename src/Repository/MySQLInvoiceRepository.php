@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Cole\Projs\Repository;
 
 use PDO;
+use DateTime;
 use Cole\Projs\Model\Invoice;
 use Cole\Projs\Repository\InvoiceRepository;
 
@@ -23,7 +25,8 @@ final class MySQLInvoiceRepository implements InvoiceRepository
         $query = <<<'QUERY'
         INSERT INTO invoices(invoiceNumber, clientName, clientAddress, totalAmount, createdAt)
         VALUES(:invoiceNumber, :clientName, :clientAddress, :totalAmount, :createdAt)
-QUERY;
+        QUERY;
+
         $statement = $this->database->connection()->prepare($query);
 
         $invoiceNumber = $invoice->getInvoiceNumber();
@@ -39,5 +42,26 @@ QUERY;
         $statement->bindParam('createdAt', $createdAt, PDO::PARAM_STR);
 
         $statement->execute();
+    }
+
+    public function getAllInvoices()
+    {
+        $query = <<<'QUERY'
+        SELECT * FROM invoices
+        QUERY;
+
+        $statement = $this->database->connection()->prepare($query);
+        $statement->execute();
+
+        $data = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        $invoices = [];
+        if ($data != NULL) {
+            for ($i = 0; $i < count($data); $i++) {
+                $invoices[$i] = Invoice::fromDatabase(intval($data[$i]->invoiceId), $data[$i]->invoiceNumber, $data[$i]->clientName, $data[$i]->clientAddress, floatval($data[$i]->totalAmount), DateTime::createFromFormat(self::DATE_FORMAT, $data[$i]->createdAt));
+            }
+        }
+
+        return $invoices;
     }
 }
