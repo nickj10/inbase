@@ -1,6 +1,6 @@
 {
-    "name": "nickj10/demo-api-with-js",
-    "description": "PHP Rest API with JS client",
+    "name": "nickj10/inbase",
+    "description": "Invoice management application",
     "type": "project",
     "autoload": {
         "psr-4": {
