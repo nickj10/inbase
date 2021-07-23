@@ -10,3 +10,4 @@ $app->get('/invoices/add', InvoiceController::class . ':showCreateInvoicePage')-
 $app->post('/invoices/add', InvoiceController::class . ':createNewInvoice')->setName('invoiceCreate');
 $app->delete('/invoices/{invoiceId}', InvoiceController::class . ':deleteInvoice')->setName('invoiceDelete');
 $app->put('/invoices/{invoiceId}', InvoiceController::class . ':updateInvoice')->setName('invoiceUpdate');
+$app->get('/invoices/{invoiceId}', InvoiceController::class . ':getInvoiceById')->setName('invoiceInfo');

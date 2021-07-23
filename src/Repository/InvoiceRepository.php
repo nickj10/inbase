@@ -12,4 +12,5 @@ interface InvoiceRepository
     public function getAllInvoices(); 
     public function deleteInvoice(int $invoiceId): bool;
     public function updateInvoice(int $invoiceId, Invoice $invoice): bool;
+    public function getInvoiceById($id);
 }

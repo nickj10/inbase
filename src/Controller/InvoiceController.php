@@ -6,6 +6,7 @@ namespace Cole\Projs\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\Response as NewResponse;
 
 use Slim\Views\Twig;
 use DateTime;
@@ -79,6 +80,25 @@ final class InvoiceController
         );
     }
 
+    public function getInvoiceById(Request $request, NewResponse $response): NewResponse
+    {
+        $id = $request->getAttribute('invoiceId');
+        $invoice = $this->db->getInvoiceById($id);
+        if($invoice == null) {
+            $responseMessage = 'There is no invoice with id ' . $id; // TODO: Add this to flash messages
+            return $response->withHeader('Location', '/invoices')->withStatus(301);
+        }
+        // return $this->twig->render(
+        //     $response,
+        //     'invoice-details.twig',
+        //     [
+        //         'invoices' => $invoices
+        //     ]
+        // );
+
+        return $response->withJson($invoice, 200);
+    }
+
     public function deleteInvoice(Request $request, Response $response): Response
     {
         $id = $request->getAttribute('invoiceId');
@@ -96,7 +116,7 @@ final class InvoiceController
 
         $errors = [];
 
-        if ($id != null) {
+        if ($id != null) { 
             $invoice = new Invoice(
                 $data['clientName'] ?? '',
                 $data['clientAddress'] ?? '',
