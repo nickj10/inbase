@@ -40,7 +40,7 @@ services:
     image: adminer:4.8.1-standalone
     restart: always
     ports:
-      - 8081:8080
+      - 8080:8080
     depends_on:
       - db
 

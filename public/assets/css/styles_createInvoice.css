@@ -1,0 +1,9 @@
+body {
+    background-color: #8ca19e;
+}
+
+.create-invoice {
+    margin-top: 100px;
+    background-color: white;
+    padding: 24px 18px;
+}
