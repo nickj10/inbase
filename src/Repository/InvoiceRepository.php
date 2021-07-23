@@ -10,4 +10,5 @@ interface InvoiceRepository
 {
     public function createInvoice(Invoice $invoice): void;
     public function getAllInvoices(); 
+    public function deleteInvoice(int $invoiceId): bool;
 }

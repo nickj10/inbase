@@ -64,4 +64,16 @@ final class MySQLInvoiceRepository implements InvoiceRepository
 
         return $invoices;
     }
+
+    public function deleteInvoice(int $invoiceId): bool {
+        $query = <<<'QUERY'
+        DELETE FROM invoices WHERE invoiceId=:id
+        QUERY;
+
+        $statement = $this->database->connection()->prepare($query);
+
+        $statement->bindParam('id', $invoiceId, PDO::PARAM_STR);
+        $statement->execute(); 
+        return True;
+    }
 }

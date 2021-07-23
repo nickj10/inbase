@@ -8,3 +8,4 @@ $app->get('/', HomeController::class . ':apply')->setName('home');
 $app->get('/invoices', InvoiceController::class . ':getAllInvoices')->setName('invoiceList');
 $app->get('/invoices/add', InvoiceController::class . ':showCreateInvoicePage')->setName('invoiceCreateForm');
 $app->post('/invoices/add', InvoiceController::class . ':createNewInvoice')->setName('invoiceCreate');
+$app->delete('/invoices/{invoiceId}', InvoiceController::class . ':deleteInvoice')->setName('invoiceDelete');
