@@ -11,7 +11,8 @@ CREATE TABLE `invoices` (
                        `invoiceNumber` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                        `clientName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                        `clientAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                       `totalAmount` decimal(19,4) NOT NULL,
+                       `totalAmount` decimal(19,2) NOT NULL,
+                       `createdAt` DATETIME,
                        `body` text CHARACTER SET utf8 COLLATE utf8_general_ci,
                        PRIMARY KEY (`invoiceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

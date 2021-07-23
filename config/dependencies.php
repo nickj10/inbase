@@ -2,10 +2,11 @@
 declare(strict_types=1);
 
 use DI\Container;
-use Cole\Projs\Controller\CreateController;
+use Cole\Projs\Controller\InvoiceController;
 use Cole\Projs\Controller\CreateFormController;
 use Cole\Projs\Controller\HomeController;
 use Cole\Projs\Repository\PDOSingleton;
+use Cole\Projs\Repository\MySQLInvoiceRepository;
 use Psr\Container\ContainerInterface;
 use Slim\Views\Twig;
 
@@ -28,6 +29,10 @@ $container->set('db', function () {
     );
 });
 
+$container->set('invoice_repository', function (ContainerInterface $container) {
+    return new MySQLInvoiceRepository($container->get('db'));
+});
+
 $container->set(
     HomeController::class,
     function(ContainerInterface $c) {
@@ -36,15 +41,15 @@ $container->set(
 );
 
 $container->set(
-    CreateController::class,
+    InvoiceController::class,
     function(ContainerInterface $c) {
-        return new CreateController($c->get('view'));
+        return new InvoiceController($c->get('view'), $c->get('invoice_repository'));
     }
 );
 
 $container->set(
     CreateFormController::class,
     function(ContainerInterface $c) {
-        return new CreateController($c->get('view'));
+        return new CreateFormController($c->get('view'));
     }
 );

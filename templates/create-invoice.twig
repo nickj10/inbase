@@ -1,0 +1,31 @@
+{% extends "base.twig" %}
+
+{% block title %}
+	Create Invoice
+{% endblock %}
+
+{% block styles %}
+	<link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/styles_createInvoice.css"/>
+{% endblock %}
+
+{% block content %}
+	<div class="create-invoice container">
+		<h1>Invoice creation</h1>
+		<form action="{{url_for('invoiceCreate')}}" method="POST">
+			<div class="form-group">
+				<label for="invoiceNumber">Invoice number</label>
+				<input type="text" class="form-control" id="invoiceNumber" name="invoiceNumber" aria-describedby="invoiceNumber" placeholder="Enter invoice number">
+				<small id="invoiceNumberInfo" class="form-text text-muted">If no invoice number is provided, it will be automatically generated.</small>
+			</div>
+			<div class="form-group">
+				<label for="clientName">Client name</label>
+				<input type="text" class="form-control" id="clientName" name="clientName" aria-describedby="clientName" placeholder="Enter client name">
+			</div>
+			<div class="form-group">
+				<label class="form-check-label" for="totalAmount">Total Amount</label>
+				<input type="number" class="form-control" id="totalAmount" name="totalAmount" >
+			</div>
+			<button type="submit" class="btn btn-primary">Create invoice</button>
+		</form>
+		<div>
+		{% endblock %}
