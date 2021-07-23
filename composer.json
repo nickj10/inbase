@@ -20,6 +20,7 @@
         "php-di/slim-bridge": "^3.1",
         "dflydev/fig-cookies": "^3.0",
         "symfony/dotenv": "^5.2",
-        "slim/twig-view": "^3.2"
+        "slim/twig-view": "^3.2",
+        "slim/http": "^1.2"
     }
 }

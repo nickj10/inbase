@@ -65,6 +65,22 @@ final class MySQLInvoiceRepository implements InvoiceRepository
         return $invoices;
     }
 
+    public function getInvoiceById($id)
+    {
+        $query = "SELECT * FROM invoices WHERE invoiceId = :id;";
+        $statement = $this->database->connection()->prepare($query);
+        $statement->bindParam(':id', $id, PDO::PARAM_STR);
+
+        $statement->execute();
+        $count = $statement->rowCount();
+        if ($count > 0) {
+            $row = $statement->fetch();
+            return Invoice::fromDatabase(intval($row['invoiceId']), $row['invoiceNumber'], $row['clientName'], $row['clientAddress'], floatval($row['totalAmount']), DateTime::createFromFormat(self::DATE_FORMAT, $row['createdAt']));
+        } else {
+            return null;
+        }
+    }
+
     public function deleteInvoice(int $invoiceId): bool {
         $query = <<<'QUERY'
         DELETE FROM invoices WHERE invoiceId=:id
