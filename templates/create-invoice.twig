@@ -10,7 +10,7 @@
 
 {% block content %}
 	<div class="create-invoice container">
-		<h1>Invoice creation</h1>
+		<h1>Create new invoice</h1>
 		<form action="{{url_for('invoiceCreate')}}" method="POST">
 			<div class="form-group">
 				<label for="invoiceNumber">Invoice number</label>
@@ -29,7 +29,7 @@
 				<label class="form-check-label" for="totalAmount">Total Amount</label>
 				<input type="number" class="form-control" id="totalAmount" name="totalAmount" >
 			</div>
-			<button type="submit" class="btn btn-primary">Create invoice</button>
+			<button type="submit" class="btn btn-primary">Create</button>
 		</form>
 		<div>
 		{% endblock %}
