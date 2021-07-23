@@ -64,7 +64,7 @@ final class InvoiceController
                 ->write('Unexpected error: ' . $exception->getMessage());
             return $response->withStatus(500);
         }
-        return $response->withHeader('Location', 'localhost:8030/')->withStatus(201);
+        return $response->withHeader('Location', '/')->withStatus(201);
     }
 
     public function getAllInvoices(Request $request, Response $response): Response
