@@ -78,4 +78,14 @@ final class InvoiceController
             ]
         );
     }
+
+    public function deleteInvoice(Request $request, Response $response): Response
+    {
+        $id = $request->getAttribute('invoiceId');
+        if ($id != null) {
+            $deleted = $this->db->deleteInvoice(intval($id));
+            return $response->withHeader('Location', '/invoices')->withStatus(301);
+        }
+        return $reponse->withStatus(500);
+    }
 }
