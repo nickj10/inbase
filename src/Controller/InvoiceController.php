@@ -57,7 +57,7 @@ final class InvoiceController
                 );
             } else {
                 $this->db->createInvoice($invoice);
-                return $response->withHeader('Location', '/invoices')->withStatus(201);
+                return $response->withHeader('Location', '/invoices')->withStatus(301);
             }
         } catch (Exception $exception) {
             // You could render a .twig template here to show the error
