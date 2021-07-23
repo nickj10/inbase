@@ -1,0 +1,10 @@
+.jumbotron {
+    background-color: #8fb6ab;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.features-icons {
+    margin-top: 100px;
+}

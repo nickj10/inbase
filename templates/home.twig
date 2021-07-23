@@ -1,8 +1,44 @@
-
 {% extends "base.twig" %}
 
-{% block title %}List{% endblock %}
+{% block title %}Homepage
+{% endblock %}
+
+{% block styles %}
+	<link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/styles_home.css"/>
+{% endblock %}
 
 {% block content %}
-    <h1 data-cy="list-title">This is the home page!</h1>
+	<div class="jumbotron">
+		<div class="container jumbotron-inner">
+			<h1>The Invoicing of Today</h1>
+			<p>Manage your invoices now with ease and flexibility with <strong>inbase</strong></p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="/invoices" role="button">Getting started</a>
+			</p>
+		</div>
+	</div>
+	<section class="features-icons bg-light text-center mt-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+						<h3>Fully Responsive</h3>
+						<p class="lead mb-0">This will look great on any device, no matter the size!</p>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+						<h3>Ready-made</h3>
+						<p class="lead mb-0">Featuring the portable application that lets you work anywhere!</p>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="features-icons-item mx-auto mb-0 mb-lg-3">
+						<h3>Easy to Use</h3>
+						<p class="lead mb-0">Ready to use with your own invoices and other files!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
