@@ -38,7 +38,10 @@ final class MySQLInvoiceRepository implements InvoiceRepository
         $dueDate = $invoice->dueDate()->format(self::DATE_FORMAT);
         $paymentDate = $invoice->paymentDate()->format(self::DATE_FORMAT);
         $createdAt = $invoice->createdAt()->format(self::DATE_FORMAT);
-        $paid = $invoice->isPaid();
+        $paid = 0;
+        if ($invoice->isPaid()) {
+            $paid = 1;
+        }
 
         $statement->bindParam('invoiceNumber', $invoiceNumber, PDO::PARAM_STR);
         $statement->bindParam('clientName', $clientName, PDO::PARAM_STR);
@@ -79,7 +82,7 @@ final class MySQLInvoiceRepository implements InvoiceRepository
                     DateTime::createFromFormat(self::DATE_FORMAT, $data[$i]->dueDate),
                     DateTime::createFromFormat(self::DATE_FORMAT, $data[$i]->paymentDate),
                     DateTime::createFromFormat(self::DATE_FORMAT, $data[$i]->createdAt),
-                    $data[$i]->paid ? 1 : 0
+                    $data[$i]->paid == 1
                 );
             }
         }

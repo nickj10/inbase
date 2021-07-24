@@ -25,12 +25,12 @@ final class InvoiceController
         return $this->twig->render($response, 'create-invoice.twig');
     }
 
-    public function parseDate($date)
+    private function parseDate($date)
     {
         $timestamp = strtotime($date); 
-        $day = date('d',$timestamp);
-        $month = date('m',$timestamp);
-        $year = date('Y',$timestamp);
+        $day = intval(date('d',$timestamp));
+        $month = intval(date('m',$timestamp));
+        $year = intval(date('Y',$timestamp));
         $newDate = new DateTime();
         $newDate->setDate($year, $month, $day);
         return $newDate;
@@ -46,6 +46,12 @@ final class InvoiceController
             if (empty($data['clientName'])) {
                 $errors['clientName'] = 'You must provide a client name';
             }
+            
+            if (!empty($data['paymentDate'])) {
+                $paymentDate = self::parseDate($data['paymentDate']);
+            } else {
+                $paymentDate = null;
+            }
 
             // TODO: Validate the fields
 
@@ -54,11 +60,11 @@ final class InvoiceController
                 floatval($data['baseAmount']),
                 floatval($data['iva']) == 0 ? 21 : floatval($data['iva']),
                 floatval($data['totalAmount']),
-                parseDate($data['invoiceDate']),
-                parseDate($data['dueDate']),
-                parseDate($data['paymentDate']),
+                self::parseDate($data['invoiceDate']),
+                self::parseDate($data['dueDate']),
+                $paymentDate,
                 new DateTime(), // createdAt,
-                $data['paid'] == 'paid'
+                !empty($data['paid'])
             );
 
             if ($data['invoiceNumber'] != '') {

@@ -27,7 +27,7 @@ final class Invoice
         float $totalAmount,
         DateTime $invoiceDate,
         DateTime $dueDate,
-        DateTime $paymentDate,
+        $paymentDate,
         DateTime $createdAt,
         bool $paid
     ) {
@@ -37,9 +37,11 @@ final class Invoice
         $this->totalAmount = $totalAmount;
         $this->invoiceDate = $invoiceDate;
         $this->dueDate = $dueDate;
-        $this->paymentDate = $paymentDate;
+        if (!empty($paymentDate)) {
+            $this->paymentDate = $paymentDate;
+        }
         $this->createdAt = $createdAt;
-        $this->paid = paid;
+        $this->paid = $paid;
     }
 
     public static function fromDatabase(
@@ -51,7 +53,7 @@ final class Invoice
         float $totalAmount,
         DateTime $invoiceDate,
         DateTime $dueDate,
-        DateTime $paymentDate,
+        $paymentDate,
         DateTime $createdAt,
         bool $paid
     ) {
