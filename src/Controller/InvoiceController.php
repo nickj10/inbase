@@ -85,8 +85,8 @@ final class InvoiceController
         $id = $request->getAttribute('invoiceId');
         $invoice = $this->db->getInvoiceById($id);
         if($invoice == null) {
-            $responseMessage = 'There is no invoice with id ' . $id; // TODO: Add this to flash messages
-            return $response->withHeader('Location', '/invoices')->withStatus(301);
+            $responseMessage = 'There is no invoice with id ' . $id; // TODO: Add this to flash messages and show invoice details page
+            return $response->withJson($responseMessage, 404);
         }
         // return $this->twig->render(
         //     $response,
@@ -104,9 +104,9 @@ final class InvoiceController
         $id = $request->getAttribute('invoiceId');
         if ($id != null) {
             $deleted = $this->db->deleteInvoice(intval($id));
-            return $response->withHeader('Location', '/invoices')->withStatus(301);
+            return $response->withStatus(200);
         }
-        return $reponse->withStatus(500);
+        return $reponse->withStatus(404);
     }
 
     public function updateInvoice(Request $request, Response $response): Response
