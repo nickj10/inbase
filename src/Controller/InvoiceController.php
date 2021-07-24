@@ -25,6 +25,17 @@ final class InvoiceController
         return $this->twig->render($response, 'create-invoice.twig');
     }
 
+    private function parseDate($date)
+    {
+        $timestamp = strtotime($date); 
+        $day = intval(date('d',$timestamp));
+        $month = intval(date('m',$timestamp));
+        $year = intval(date('Y',$timestamp));
+        $newDate = new DateTime();
+        $newDate->setDate($year, $month, $day);
+        return $newDate;
+    }
+
     public function createNewInvoice(Request $request, Response $response): Response
     {
         try {
@@ -35,13 +46,27 @@ final class InvoiceController
             if (empty($data['clientName'])) {
                 $errors['clientName'] = 'You must provide a client name';
             }
+            
+            if (!empty($data['paymentDate'])) {
+                $paymentDate = self::parseDate($data['paymentDate']);
+            } else {
+                $paymentDate = null;
+            }
+
+            // TODO: Validate the fields
 
             $invoice = new Invoice(
                 $data['clientName'] ?? '',
-                $data['clientAddress'] ?? '',
+                floatval($data['baseAmount']),
+                floatval($data['iva']) == 0 ? 21 : floatval($data['iva']),
                 floatval($data['totalAmount']),
-                new DateTime()
+                self::parseDate($data['invoiceDate']),
+                self::parseDate($data['dueDate']),
+                $paymentDate,
+                new DateTime(), // createdAt,
+                !empty($data['paid'])
             );
+
             if ($data['invoiceNumber'] != '') {
                 $invoice->setInvoiceNumber($data['invoiceNumber']);
             } else {

@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block title %}
-Create Invoice
+Invoices
 {% endblock %}
 
 {% block styles %}
@@ -14,20 +14,28 @@ Create Invoice
 	<div class="table-responsive">
 		<table class="table table-hover table-bordered">
 			<thead>
-				<th scope="col">Invoice ID</th>
 				<th scope="col">Invoice Number</th>
 				<th scope="col">Client name</th>
-				<th scope="col">Client address</th>
+				<th scope="col">Base amount (€) </th>
+				<th scope="col">IVA (%)</th>
 				<th scope="col">Total amount (€)</th>
+				<th scope="col">Status</th>
 			</thead>
 			<tbody>
 				{% for invoice in invoices %}
 				<tr>
-					<th scope="row">{{ invoice.invoiceId }}</th>
-					<td>{{ invoice.invoiceNumber }}</td>
+					<td scope="row">{{ invoice.invoiceNumber }}</td>
 					<td>{{ invoice.clientName }}</td>
-					<td>{{ invoice.clientAddress }}</td>
+					<td>{{ invoice.baseAmount }}</td>
+					<td>{{ invoice.iva }}</td>
 					<td>{{ invoice.totalAmount }}</td>
+					<td>
+						{% if invoice.paid %}
+							<span class="label label-success">PAID</span>
+						{% else %}
+							<span class="label label-danger">NOT PAID</span>
+						{% endif %}
+					</td>
 					<td>
 						<a href="/invoices/{{invoice.invoiceId}}" class="btn btn-info btn-m" role="button">More info</a>
 						<button onclick="deleteInvoice({{ invoice.invoiceId }})" class="btn btn-danger btn-m">Delete</button>

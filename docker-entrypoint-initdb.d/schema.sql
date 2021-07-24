@@ -10,9 +10,14 @@ CREATE TABLE `invoices` (
                        `invoiceId` int NOT NULL AUTO_INCREMENT,
                        `invoiceNumber` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                        `clientName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                       `clientAddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                       `baseAmount` decimal(19,2) NOT NULL,
+                       `iva` decimal NOT NULL,
                        `totalAmount` decimal(19,2) NOT NULL,
+                       `invoiceDate` DATETIME,
+                       `dueDate` DATETIME,
+                       `paymentDate` DATETIME,
                        `createdAt` DATETIME,
+                       `paid` BOOLEAN,
                        `body` text CHARACTER SET utf8 COLLATE utf8_general_ci,
                        PRIMARY KEY (`invoiceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

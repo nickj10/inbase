@@ -11,30 +11,62 @@ final class Invoice
     private int $invoiceId;
     private string $invoiceNumber;
     private string $clientName;
-    private string $clientAddress;
+    private float $baseAmount;
+    private float $iva;
     private float $totalAmount;
+    private DateTime $invoiceDate;
+    private DateTime $dueDate;
+    private DateTime $paymentDate;
+    private DateTime $createdAt;
+    private bool $paid;
 
     public function __construct(
         string $clientName,
-        string $clientAddress,
+        float $baseAmount,
+        float $iva,
         float $totalAmount,
-        DateTime $createdAt
+        DateTime $invoiceDate,
+        DateTime $dueDate,
+        $paymentDate,
+        DateTime $createdAt,
+        bool $paid
     ) {
         $this->clientName = $clientName;
-        $this->clientAddress = $clientAddress;
+        $this->baseAmount = $baseAmount;
+        $this->iva = $iva;
         $this->totalAmount = $totalAmount;
+        $this->invoiceDate = $invoiceDate;
+        $this->dueDate = $dueDate;
+        if (!empty($paymentDate)) {
+            $this->paymentDate = $paymentDate;
+        }
         $this->createdAt = $createdAt;
+        $this->paid = $paid;
     }
 
     public static function fromDatabase(
         int $invoiceId,
         string $invoiceNumber,
         string $clientName,
-        string $clientAddress,
+        float $baseAmount,
+        float $iva,
         float $totalAmount,
-        DateTime $createdAt
+        DateTime $invoiceDate,
+        DateTime $dueDate,
+        $paymentDate,
+        DateTime $createdAt,
+        bool $paid
     ) {
-        $instance = new self($clientName, $clientAddress, $totalAmount, $createdAt);
+        $instance = new self(
+            $clientName,
+            $baseAmount,
+            $iva,
+            $totalAmount,
+            $invoiceDate,
+            $dueDate,
+            $paymentDate,
+            $createdAt,
+            $paid);
         $instance->invoiceNumber = $invoiceNumber;
         $instance->invoiceId = $invoiceId;
         return $instance;
@@ -42,7 +74,7 @@ final class Invoice
 
     public function generateInvoiceNumber()
     {
-        $this->invoiceNumber = uniqid('', true);
+        $this->invoiceNumber = uniqid('', true); // Test purposes only
     }
 
     public function getInvoiceId(): int
@@ -60,19 +92,43 @@ final class Invoice
         return $this->clientName;
     }
 
-    public function getClientAddress(): string
+    public function getBaseAmount(): float
     {
-        return $this->clientAddress;
+        return $this->baseAmount;
     }
 
+    public function getIVA(): float
+    {
+        return $this->iva;
+    }
     public function getTotalAmount(): float
     {
         return $this->totalAmount;
     }
 
+    public function invoiceDate(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function dueDate(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function paymentDate(): DateTime
+    {
+        return $this->createdAt;
+    }
+
     public function createdAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    public function isPaid(): bool
+    {
+        return $this->paid;
     }
 
     public function setInvoiceNumber(string $invoiceNumber)
