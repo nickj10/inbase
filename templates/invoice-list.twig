@@ -1,37 +1,55 @@
 {% extends "base.twig" %}
 
 {% block title %}
-	Create Invoice
+Create Invoice
 {% endblock %}
 
 {% block styles %}
-	<link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/styles_invoiceList.css"/>
+<link rel="stylesheet" href="{{ full_url_for('home') }}assets/css/styles_invoiceList.css" />
 {% endblock %}
 
 {% block content %}
-	<div class="invoice-list container">
-		<h1>Your invoices</h1>
-		<div class="table-responsive">
-			<table class="table table-hover table-bordered">
-				<thead>
-					<th scope="col">Invoice ID</th>
-					<th scope="col">Invoice Number</th>
-					<th scope="col">Client name</th>
-					<th scope="col">Client address</th>
-					<th scope="col">Total amount (€)</th>
-				</thead>
-				<tbody>
-					{% for invoice in invoices %}
-						<tr>
-							<th scope="row">{{ invoice.invoiceId }}</th>
-							<td>{{ invoice.invoiceNumber }}</td>
-							<td>{{ invoice.clientName }}</td>
-							<td>{{ invoice.clientAddress }}</td>
-							<td>{{ invoice.totalAmount }}</td>
-						</tr>
-					</tbody>
-				</tbody>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table></div></div>{% endblock %}
+<div class="invoice-list container">
+	<h1>Your invoices</h1>
+	<div class="table-responsive">
+		<table class="table table-hover table-bordered">
+			<thead>
+				<th scope="col">Invoice ID</th>
+				<th scope="col">Invoice Number</th>
+				<th scope="col">Client name</th>
+				<th scope="col">Client address</th>
+				<th scope="col">Total amount (€)</th>
+			</thead>
+			<tbody>
+				{% for invoice in invoices %}
+				<tr>
+					<th scope="row">{{ invoice.invoiceId }}</th>
+					<td>{{ invoice.invoiceNumber }}</td>
+					<td>{{ invoice.clientName }}</td>
+					<td>{{ invoice.clientAddress }}</td>
+					<td>{{ invoice.totalAmount }}</td>
+					<td>
+						<a href="/invoices/{{invoice.invoiceId}}" class="btn btn-info btn-m" role="button">More info</a>
+						<button onclick="deleteInvoice({{ invoice.invoiceId }})" class="btn btn-danger btn-m">Delete</button>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+	function deleteInvoice(id) {
+		$.ajax({
+			url: "/invoices/" + id,
+			type: 'DELETE',
+			success: function () {
+				window.location.href = "/invoices";
+				window.location.reload(true);
+			}
+		});
+	}
+</script>
+{% endblock %}
