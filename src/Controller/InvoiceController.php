@@ -25,7 +25,7 @@ final class InvoiceController
         return $this->twig->render($response, 'create-invoice.twig');
     }
 
-    private function parseDate($date)
+    public function parseDate($date)
     {
         $timestamp = strtotime($date); 
         $day = date('d',$timestamp);
